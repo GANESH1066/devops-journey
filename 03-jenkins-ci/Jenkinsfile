@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+    
+    environment {
+        APP_NAME = 'my-health-app'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Pulling latest code from Git...'
+                sh 'ls -la'
+            }
+        }
+        
+        stage('Build Docker Image') {
+            steps {
+                echo "Building Docker image for ${APP_NAME}..."
+                sh "echo 'Running docker build -t my-health-app .'"
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                echo "Testing the application..."
+                sh "echo 'Simulating tests... All passed!'"
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                echo "Deploying ${APP_NAME} to production..."
+                sh "echo 'Deployment successful!'"
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo "Pipeline succeeded!"
+        }
+        failure {
+            echo "Pipeline failed! Please check the logs."
+        }
+    }
+}
