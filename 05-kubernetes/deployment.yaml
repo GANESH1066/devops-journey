@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: health-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: health
+  template:
+    metadata:
+      labels:
+        app: health
+    spec:
+      containers:
+      - name: health-container
+        image: my-health-app
+        imagePullPolicy: Never # Tells K8s to use the local image, not Docker Hub
+        ports:
+        - containerPort: 5000
